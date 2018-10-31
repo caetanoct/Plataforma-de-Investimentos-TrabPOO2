@@ -21,7 +21,6 @@ public class MainClass extends JFrame {
 	JButton btBut0;
 	JButton btBut1;
 	Conta usuarioLogado = null;
-
 	public MainClass() {
 		super("app");
 		pnPanel0 = new JPanel();
