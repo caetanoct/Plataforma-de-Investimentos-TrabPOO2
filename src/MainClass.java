@@ -153,7 +153,7 @@ public class MainClass extends JFrame {
 				//Caso botao meus investimentos seja apertado
 				if (e.getSource().equals(clientePanel.btMyInvestButton)) {
 					//Abrir uma janela mostrando os investimentos e os valores neles
-					//Mostrar patrimonio total = valor investido + saldo disponivel
+					//Mostrar patrimonio total = valor investido + saldo disponive
 				}
 				//Caso botao resgate seja apertado
 				if (e.getSource().equals(clientePanel.btResgateButton)) {
