@@ -1,14 +1,14 @@
 
-public class FIM extends Investimento {
-	public String nome = "Fundo de investimento multi-mercado";
-	public double rentabilidadeAA = 15.03;
-	public double taxaAdm = 1.5;
-	public FIM() {
+public class CDB extends Investimento {
+	public String nome = "Certificado de depósito bancário(Renda-Fixa)";
+	public double rentabilidadeAA = 8.3;
+	public double taxaAdm = 0.75;
+	public CDB() {
 		this.setNome(nome);
 		this.setRentabilidadeAA(rentabilidadeAA);
 		this.setTaxaAdm(taxaAdm);
 	}
-	public FIM(double valor) {
+	public CDB(double valor) {
 		this.setNome(nome);
 		this.setRentabilidadeAA(rentabilidadeAA);
 		this.setTaxaAdm(taxaAdm);

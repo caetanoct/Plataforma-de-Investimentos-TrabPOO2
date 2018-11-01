@@ -16,6 +16,14 @@ public abstract class Investimento {
 	public double getValorInvestimento() {
 		return valorInvestimento;
 	}
+	public void setRentabilidadeAA(double rentabilidadeAA) {
+		this.rentabilidadeAA = rentabilidadeAA;
+	}
+
+	public void setTaxaAdm(double taxaAdm) {
+		this.taxaAdm = taxaAdm;
+	}
+
 	public void setValorInvestimento(double valorInvestimento) {
 		this.valorInvestimento = valorInvestimento;
 	}

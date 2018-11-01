@@ -13,9 +13,16 @@ import javax.swing.JPanel;
 
 public class MainClass extends JFrame {
 	public ArrayList<Conta> contasSistema = new ArrayList<>();
+	public Investimento[] investimentosDisponíveis = {
+		new TDPR(),
+		new FIM(),
+		new CDB(),
+		new LCI(),
+	};
 	RegisterPanel panelRegistro;
 	LoginPanel panelLogin;
 	AreaCliente clientePanel;
+	InvestGUI areaInvestir;
 	JPanel pnPanel0;
 	JLabel lbLabel1;
 	JButton btBut0;
@@ -145,6 +152,8 @@ public class MainClass extends JFrame {
 				//Caso botao investir seja apertado
 				if (e.getSource().equals(clientePanel.btInvestButton)) {
 					//Abrir nova janela listando os investimentos disponiveis(com respectivas rentabilidades) com a botao investir
+					areaInvestir = new InvestGUI();
+				
 				}
 				//Caso botao atualizar seja apertado
 				if (e.getSource().equals(clientePanel.btRefreshButton)) {
