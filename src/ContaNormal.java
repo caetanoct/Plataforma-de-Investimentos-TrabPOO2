@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class ContaNormal extends Conta implements Carteira {
+public class ContaNormal extends Conta implements Carteira, Serializable {
 	private double saldo;
 	private String usuario;
 	private String senha;
