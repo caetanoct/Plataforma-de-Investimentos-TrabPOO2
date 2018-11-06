@@ -13,12 +13,7 @@ import javax.swing.JPanel;
 
 public class MainClass extends JFrame {
 	public ArrayList<Conta> contasSistema = new ArrayList<>();
-	public Investimento[] investimentosDisponíveis = {
-		new TDPR(),
-		new FIM(),
-		new CDB(),
-		new LCI(),
-	};
+	public Investimento[] investimentosDisponiveis = { new TDPR(), new FIM(), new CDB(), new LCI(), };
 	RegisterPanel panelRegistro;
 	LoginPanel panelLogin;
 	AreaCliente clientePanel;
@@ -28,13 +23,14 @@ public class MainClass extends JFrame {
 	JButton btBut0;
 	JButton btBut1;
 	Conta usuarioLogado = null;
+
 	public MainClass() {
 		super("app");
 		pnPanel0 = new JPanel();
 		pnPanel0.setLayout(new GridLayout(3, 1));
 		lbLabel1 = new JLabel("Plataforma de Investimentos: ");
 		pnPanel0.add(lbLabel1);
-		btBut0 = new JButton("Entrar na área do cliente");
+		btBut0 = new JButton("Entrar na ï¿½rea do cliente");
 		pnPanel0.add(btBut0);
 		btBut1 = new JButton("Criar nova conta");
 		pnPanel0.add(btBut1);
@@ -45,13 +41,12 @@ public class MainClass extends JFrame {
 	}
 
 	private class ButtonHandler implements ActionListener {
-		boolean but0JaApertado = false;
-		boolean but1JaApertado = false;
-		boolean loginEfetuado = false;
+
+		boolean but1JaApertado, but0JaApertado, loginEfetuado, investPanelIsRunning = false;
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// Se é apertado botão 0(Login) é aberto o frame de login
+			// Se ï¿½ apertado botï¿½o 0(Login) ï¿½ aberto o frame de login
 			if (e.getSource().equals(btBut0)) {
 				panelLogin = new LoginPanel();
 				panelLogin.setSize(200, 145);
@@ -60,7 +55,7 @@ public class MainClass extends JFrame {
 				but0JaApertado = true;
 			}
 
-			// Se é apertado botão 1(registro) é aberto o frame de registro
+			// Se ï¿½ apertado botï¿½o 1(registro) ï¿½ aberto o frame de registro
 			if (e.getSource().equals(btBut1)) {
 				panelRegistro = new RegisterPanel();
 				panelRegistro.setSize(200, 175);
@@ -79,7 +74,7 @@ public class MainClass extends JFrame {
 						if (!UtilMethods.isUserAlreadyInData(atrib1, contasSistema)) {
 							contasSistema.add(newConta);
 						} else {
-							System.out.println("já existe esse user1");
+							System.out.println("jï¿½ existe esse user1");
 						}
 
 					} else {
@@ -88,7 +83,7 @@ public class MainClass extends JFrame {
 						if (!UtilMethods.isUserAlreadyInData(atrib1, contasSistema)) {
 							contasSistema.add(newConta);
 						} else {
-							System.out.println("já existe esse user2");
+							System.out.println("jï¿½ existe esse user2");
 						}
 
 					}
@@ -104,7 +99,7 @@ public class MainClass extends JFrame {
 					String fieldPass = panelLogin.tfPassWordField.getText();
 					boolean ok = UtilMethods.autentica(fieldUser, fieldPass, contasSistema);
 					if (ok == true) {
-						JOptionPane.showMessageDialog(null, "Login Aceito", "Abrindo área do cliente...",
+						JOptionPane.showMessageDialog(null, "Login Aceito", "Abrindo ï¿½rea do cliente...",
 								JOptionPane.PLAIN_MESSAGE);
 
 						try {
@@ -113,13 +108,12 @@ public class MainClass extends JFrame {
 							System.err.println(err.getMessage());
 						}
 						clientePanel = new AreaCliente();
-						if(usuarioLogado.isPremium()) {
+						if (usuarioLogado.isPremium()) {
 							clientePanel.setTitle(usuarioLogado.getUsuario() + "(Conta Premium)");
-						}
-						else {
+						} else {
 							clientePanel.setTitle(usuarioLogado.getUsuario() + "(Conta Normal)");
 						}
-						
+
 						clientePanel.pnLabelsPan.label2.setText(Double.toString(usuarioLogado.getSaldo()) + "R$");
 						clientePanel.btDepositButton.addActionListener(this);
 						clientePanel.btResgateButton.addActionListener(this);
@@ -128,7 +122,7 @@ public class MainClass extends JFrame {
 						clientePanel.btMyInvestButton.addActionListener(this);
 						clientePanel.btRefreshButton.addActionListener(this);
 						clientePanel.btSimButton.addActionListener(this);
-			
+
 						clientePanel.setSize(375, 250);
 						clientePanel.setVisible(true);
 						loginEfetuado = true;
@@ -142,51 +136,163 @@ public class MainClass extends JFrame {
 				}
 			}
 			if (loginEfetuado == true) {
-				//Caso botao depositar seja apertado
+				// Caso botao depositar seja apertado
 				if (e.getSource().equals(clientePanel.btDepositButton)) {
-					Double valor = Double.parseDouble(JOptionPane.showInputDialog(null,
-							"Digite o valor que deseja depositar", "Deposit", JOptionPane.PLAIN_MESSAGE));
-					usuarioLogado.creditar(valor);
-					clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo()+"R$");
+					try {
+						Double valor = Double.parseDouble(JOptionPane.showInputDialog(null,
+								"Digite o valor que deseja depositar", "Deposit", JOptionPane.PLAIN_MESSAGE));
+						usuarioLogado.creditar(valor);
+						clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo() + "R$");	
+					} catch (Exception e2) {
+						// TODO: handle exception
+						System.err.println(e2.getMessage());
+					}
+					
 				}
-				//Caso botao investir seja apertado
+				// Caso botao investir seja apertado
 				if (e.getSource().equals(clientePanel.btInvestButton)) {
-					//Abrir nova janela listando os investimentos disponiveis(com respectivas rentabilidades) com a botao investir
+					// Abrir nova janela listando os investimentos disponiveis(com respectivas
+					// rentabilidades) com a botao investir
 					areaInvestir = new InvestGUI();
-				
+					areaInvestir.setSize(500, 500);
+					areaInvestir.setVisible(true);
+					for (int i = 0; i < 4; i++) {
+						areaInvestir.btnInvestirButton[i].addActionListener(this);
+					}
+					investPanelIsRunning = true;
+
 				}
-				//Caso botao atualizar seja apertado
+				// Caso botao atualizar seja apertado
 				if (e.getSource().equals(clientePanel.btRefreshButton)) {
-					clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo()+"R$");
+					clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo() + "R$");
 				}
-				//Caso botao meus investimentos seja apertado
+				// Caso botao meus investimentos seja apertado
 				if (e.getSource().equals(clientePanel.btMyInvestButton)) {
-					//Abrir uma janela mostrando os investimentos e os valores neles
-					//Mostrar patrimonio total = valor investido + saldo disponive
+					// Abrir uma janela mostrando os investimentos e os valores neles
+					// Mostrar patrimonio total = valor investido + saldo disponive
+					MeusInvestPanel panel = new MeusInvestPanel(usuarioLogado);
+					panel.setSize(500, 500);
+					panel.setVisible(true);
 				}
-				//Caso botao resgate seja apertado
+				// Caso botao resgate seja apertado
 				if (e.getSource().equals(clientePanel.btResgateButton)) {
-					if(usuarioLogado.getSaldo() > 0) {
-						Double valor = Double.parseDouble(JOptionPane.showInputDialog(null,"Digite o valor que deseja resgatar", "Resgate", JOptionPane.PLAIN_MESSAGE));
-						if(valor <= usuarioLogado.getSaldo()) {
+					if (usuarioLogado.getSaldo() > 0) {
+						Double valor = Double.parseDouble(JOptionPane.showInputDialog(null,
+								"Digite o valor que deseja resgatar", "Resgate", JOptionPane.PLAIN_MESSAGE));
+						if (valor <= usuarioLogado.getSaldo()) {
 							usuarioLogado.debitar(valor);
-							clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo()+"R$");
-						}
-						else {
-							JOptionPane.showMessageDialog(null, "O valor que deseja resgatar é maior que o seu saldo disponível.", "ERRO!", JOptionPane.ERROR_MESSAGE);
+							clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo() + "R$");
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"O valor que deseja resgatar ï¿½ maior que o seu saldo disponï¿½vel.", "ERRO!",
+									JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				}
-				//Caso botao simular investimento seja apertado
+				// Caso botao simular investimento seja apertado
 				if (e.getSource().equals(clientePanel.btSimButton)) {
-					//Código para simular investimento
+					// Cï¿½digo para simular investimento
 				}
 
-				//Caso botao sair seja apertado
+				// Caso botao sair seja apertado
 				if (e.getSource().equals(clientePanel.btExitButton)) {
 					clientePanel.setVisible(false);
 					usuarioLogado = null;
 					loginEfetuado = false;
+				}
+
+				// Dentro do invest panel
+				/*
+				 * new TDPR(), new FIM(), new CDB(), new LCI(),
+				 */
+				if (investPanelIsRunning == true) {
+					try {
+
+						if (e.getSource().equals(areaInvestir.btnInvestirButton[0])) {
+							double valor = Double.parseDouble(
+									JOptionPane.showInputDialog(null, "Digite a quantidade que deseja investir",
+											"Efetuar Investimento", JOptionPane.PLAIN_MESSAGE));
+							if (valor < usuarioLogado.getSaldo()) {
+
+								TDPR invest = new TDPR(valor);
+								usuarioLogado.efetuarInvest(valor, invest);
+							}
+							int a = JOptionPane.showConfirmDialog(null, "Deseja continuar investindo?");
+							if (a == 1) {
+								areaInvestir.setVisible(false);
+								investPanelIsRunning = false;
+							}
+						}
+					} catch (Exception e2) {
+						// TODO: handle exception
+						System.err.println(e2.getMessage());
+					}
+
+					if (e.getSource().equals(areaInvestir.btnInvestirButton[1])) {
+						try {
+
+							double valor = Double.parseDouble(
+									JOptionPane.showInputDialog(null, "Digite a quantidade que deseja investir",
+											"Efetuar Investimento", JOptionPane.PLAIN_MESSAGE));
+							if (valor < usuarioLogado.getSaldo()) {
+
+								FIM invest = new FIM(valor);
+								usuarioLogado.efetuarInvest(valor, invest);
+							}
+							int a = JOptionPane.showConfirmDialog(null, "Deseja continuar investindo?");
+							if (a == 1) {
+								areaInvestir.setVisible(false);
+								investPanelIsRunning = false;
+							}
+						} catch (Exception e2) {
+							System.err.println(e2.getMessage());
+						}
+
+					}
+					if (e.getSource().equals(areaInvestir.btnInvestirButton[2])) {
+						try {
+							double valor = Double.parseDouble(
+									JOptionPane.showInputDialog(null, "Digite a quantidade que deseja investir",
+											"Efetuar Investimento", JOptionPane.PLAIN_MESSAGE));
+							if (valor < usuarioLogado.getSaldo()) {
+
+								CDB invest = new CDB(valor);
+								usuarioLogado.efetuarInvest(valor, invest);
+							}
+							int a = JOptionPane.showConfirmDialog(null, "Deseja continuar investindo?");
+							if (a == 1) {
+								areaInvestir.setVisible(false);
+								investPanelIsRunning = false;
+							}
+						} catch (Exception e2) {
+							// TODO: handle exception
+							System.err.println(e2.getMessage());
+						}
+
+					}
+					if (e.getSource().equals(areaInvestir.btnInvestirButton[3])) {
+						try {
+							double valor = Double.parseDouble(
+									JOptionPane.showInputDialog(null, "Digite a quantidade que deseja investir",
+											"Efetuar Investimento", JOptionPane.PLAIN_MESSAGE));
+							if (valor < usuarioLogado.getSaldo()) {
+
+								LCI invest = new LCI(valor);
+								usuarioLogado.efetuarInvest(valor, invest);
+
+							}
+							int a = JOptionPane.showConfirmDialog(null, "Deseja continuar investindo?");
+							if (a == 1) {
+								areaInvestir.setVisible(false);
+								investPanelIsRunning = false;
+							}
+						} catch (Exception except) {
+							// TODO: handle exception
+							System.err.println(except.getMessage());
+						}
+
+					}
+					clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo() + "R$");
 				}
 			}
 		}
@@ -194,6 +300,7 @@ public class MainClass extends JFrame {
 	}
 
 	public static void main(String[] args) {
+
 		MainClass app = new MainClass();
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setSize(200, 150);

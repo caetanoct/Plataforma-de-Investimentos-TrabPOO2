@@ -4,7 +4,7 @@ public class ContaNormal extends Conta implements Carteira {
 	private double saldo;
 	private String usuario;
 	private String senha;
-	private ArrayList<Investimento> investimentos;
+	private ArrayList<Investimento> investimentos = new ArrayList<>();
 	public final boolean pagaTaxa = true;
 	public boolean isPremium() {
 		return false;

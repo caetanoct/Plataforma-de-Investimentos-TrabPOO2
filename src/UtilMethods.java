@@ -25,4 +25,14 @@ public class UtilMethods {
 		}
 		throw new UserNotFoundException("User not found");
 	} 
+	
+	public static double getTotalInvestidoEm(Investimento i, ArrayList<Investimento> arrayInvest) {
+		double valorTotal = 0;
+		for(Investimento in: arrayInvest) {
+			if(i.getNome().equals(in.getNome())) {
+				valorTotal += in.getValorInvestimento();
+			}
+		}
+		return valorTotal;
+	}
 }

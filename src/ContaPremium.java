@@ -5,7 +5,7 @@ public class ContaPremium extends Conta implements Carteira{
 	private double saldo;
 	private String usuario;
 	private String senha;
-	private ArrayList<Investimento> investimentos;
+	private ArrayList<Investimento> investimentos = new ArrayList<>();
 	public final boolean pagaTaxa = false;
 	
 	public ContaPremium(double saldo, String usuario, String senha) {
