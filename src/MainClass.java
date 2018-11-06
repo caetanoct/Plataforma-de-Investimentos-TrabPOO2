@@ -12,8 +12,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MainClass extends JFrame {
-	public ArrayList<Conta> contasSistema = new ArrayList<>();
-	public Investimento[] investimentosDisponíveis = {
+	public SerializableFileManager fileManager = new SerializableFileManager();
+	public ArrayList<Conta> contasSistema = fileManager.read();
+	public Investimento[] investimentosDisponiveis = {
 		new TDPR(),
 		new FIM(),
 		new CDB(),
@@ -34,7 +35,7 @@ public class MainClass extends JFrame {
 		pnPanel0.setLayout(new GridLayout(3, 1));
 		lbLabel1 = new JLabel("Plataforma de Investimentos: ");
 		pnPanel0.add(lbLabel1);
-		btBut0 = new JButton("Entrar na área do cliente");
+		btBut0 = new JButton("Entrar na ï¿½rea do cliente");
 		pnPanel0.add(btBut0);
 		btBut1 = new JButton("Criar nova conta");
 		pnPanel0.add(btBut1);
@@ -51,7 +52,7 @@ public class MainClass extends JFrame {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			// Se é apertado botão 0(Login) é aberto o frame de login
+			// Se ï¿½ apertado botï¿½o 0(Login) ï¿½ aberto o frame de login
 			if (e.getSource().equals(btBut0)) {
 				panelLogin = new LoginPanel();
 				panelLogin.setSize(200, 145);
@@ -60,7 +61,7 @@ public class MainClass extends JFrame {
 				but0JaApertado = true;
 			}
 
-			// Se é apertado botão 1(registro) é aberto o frame de registro
+			// Se ï¿½ apertado botï¿½o 1(registro) ï¿½ aberto o frame de registro
 			if (e.getSource().equals(btBut1)) {
 				panelRegistro = new RegisterPanel();
 				panelRegistro.setSize(200, 175);
@@ -75,11 +76,12 @@ public class MainClass extends JFrame {
 					String atrib2 = panelRegistro.tfField2.getText();
 					if (panelRegistro.cbBox1.isSelected()) {
 						ContaPremium newConta = new ContaPremium(0, atrib1, atrib2);
-
+						
 						if (!UtilMethods.isUserAlreadyInData(atrib1, contasSistema)) {
 							contasSistema.add(newConta);
+							fileManager.write(newConta);
 						} else {
-							System.out.println("já existe esse user1");
+							System.out.println("jï¿½ existe esse user1");
 						}
 
 					} else {
@@ -87,8 +89,9 @@ public class MainClass extends JFrame {
 
 						if (!UtilMethods.isUserAlreadyInData(atrib1, contasSistema)) {
 							contasSistema.add(newConta);
+							fileManager.write(newConta);
 						} else {
-							System.out.println("já existe esse user2");
+							System.out.println("jï¿½ existe esse user2");
 						}
 
 					}
@@ -104,7 +107,7 @@ public class MainClass extends JFrame {
 					String fieldPass = panelLogin.tfPassWordField.getText();
 					boolean ok = UtilMethods.autentica(fieldUser, fieldPass, contasSistema);
 					if (ok == true) {
-						JOptionPane.showMessageDialog(null, "Login Aceito", "Abrindo área do cliente...",
+						JOptionPane.showMessageDialog(null, "Login Aceito", "Abrindo ï¿½rea do cliente...",
 								JOptionPane.PLAIN_MESSAGE);
 
 						try {
@@ -147,6 +150,7 @@ public class MainClass extends JFrame {
 					Double valor = Double.parseDouble(JOptionPane.showInputDialog(null,
 							"Digite o valor que deseja depositar", "Deposit", JOptionPane.PLAIN_MESSAGE));
 					usuarioLogado.creditar(valor);
+					fileManager.update(usuarioLogado);
 					clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo()+"R$");
 				}
 				//Caso botao investir seja apertado
@@ -170,16 +174,17 @@ public class MainClass extends JFrame {
 						Double valor = Double.parseDouble(JOptionPane.showInputDialog(null,"Digite o valor que deseja resgatar", "Resgate", JOptionPane.PLAIN_MESSAGE));
 						if(valor <= usuarioLogado.getSaldo()) {
 							usuarioLogado.debitar(valor);
+							fileManager.update(usuarioLogado);
 							clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo()+"R$");
 						}
 						else {
-							JOptionPane.showMessageDialog(null, "O valor que deseja resgatar é maior que o seu saldo disponível.", "ERRO!", JOptionPane.ERROR_MESSAGE);
+							JOptionPane.showMessageDialog(null, "O valor que deseja resgatar ï¿½ maior que o seu saldo disponï¿½vel.", "ERRO!", JOptionPane.ERROR_MESSAGE);
 						}
 					}
 				}
 				//Caso botao simular investimento seja apertado
 				if (e.getSource().equals(clientePanel.btSimButton)) {
-					//Código para simular investimento
+					//Cï¿½digo para simular investimento
 				}
 
 				//Caso botao sair seja apertado
