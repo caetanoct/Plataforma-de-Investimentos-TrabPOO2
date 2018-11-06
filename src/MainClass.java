@@ -12,7 +12,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MainClass extends JFrame {
-	public ArrayList<Conta> contasSistema = new ArrayList<>();
+	public SerializableFileManager fileManager = new SerializableFileManager();
+	public ArrayList<Conta> contasSistema = fileManager.read();
 	public Investimento[] investimentosDisponiveis = { new TDPR(), new FIM(), new CDB(), new LCI(), };
 	RegisterPanel panelRegistro;
 	LoginPanel panelLogin;
@@ -70,9 +71,10 @@ public class MainClass extends JFrame {
 					String atrib2 = panelRegistro.tfField2.getText();
 					if (panelRegistro.cbBox1.isSelected()) {
 						ContaPremium newConta = new ContaPremium(0, atrib1, atrib2);
-
+						
 						if (!UtilMethods.isUserAlreadyInData(atrib1, contasSistema)) {
 							contasSistema.add(newConta);
+							fileManager.write(newConta);
 						} else {
 							System.out.println("j� existe esse user1");
 						}
@@ -82,6 +84,7 @@ public class MainClass extends JFrame {
 
 						if (!UtilMethods.isUserAlreadyInData(atrib1, contasSistema)) {
 							contasSistema.add(newConta);
+							fileManager.write(newConta);
 						} else {
 							System.out.println("j� existe esse user2");
 						}
@@ -142,12 +145,12 @@ public class MainClass extends JFrame {
 						Double valor = Double.parseDouble(JOptionPane.showInputDialog(null,
 								"Digite o valor que deseja depositar", "Deposit", JOptionPane.PLAIN_MESSAGE));
 						usuarioLogado.creditar(valor);
+            fileManager.update(usuarioLogado);
 						clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo() + "R$");	
 					} catch (Exception e2) {
 						// TODO: handle exception
 						System.err.println(e2.getMessage());
 					}
-					
 				}
 				// Caso botao investir seja apertado
 				if (e.getSource().equals(clientePanel.btInvestButton)) {
@@ -181,6 +184,7 @@ public class MainClass extends JFrame {
 								"Digite o valor que deseja resgatar", "Resgate", JOptionPane.PLAIN_MESSAGE));
 						if (valor <= usuarioLogado.getSaldo()) {
 							usuarioLogado.debitar(valor);
+              fileManager.update(usuarioLogado);
 							clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo() + "R$");
 						} else {
 							JOptionPane.showMessageDialog(null,
