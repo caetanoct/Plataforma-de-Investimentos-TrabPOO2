@@ -100,12 +100,12 @@ public class SerializableFileManager {
 	}
 	
 	public void update(Conta conta) {
-		for (Conta c : array) {
-			if (c.getUsuario().equals(conta.getUsuario())) {
-				array.remove(c);
-				write(conta);
-				break;
-			}
+		try {
+			Conta c = UtilMethods.getContaByUser(conta.getUsuario(), array);
+			array.remove(c);
+			write(conta);
+		} catch(UserNotFoundException e) {
+			System.err.println("User not found");
 		}
 	}
 }
