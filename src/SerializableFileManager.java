@@ -3,28 +3,23 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InvalidClassException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.io.OptionalDataException;
-import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 
 public class SerializableFileManager {
 	private ObjectInputStream input;
 	private ObjectOutputStream output;
-	private ArrayList<Conta> contas;
+	private ArrayList<Conta> array;
 
 	public SerializableFileManager() {
 		File file = new File("contas.ser");
-		contas = new ArrayList<Conta>();
-		if (!file.exists()) {
+		array = new ArrayList<Conta>();
+		if (!file.exists() || file.length() == 0) {
 			openOutputFile();
 			closeOutputFile();
 		} else {
-			openInputFile();
-			contas = readInput();
-			closeInputFile();
+			array = read();
 		}
 	}
 
@@ -32,22 +27,24 @@ public class SerializableFileManager {
 		try {
 			input = new ObjectInputStream(new FileInputStream("contas.ser"));
 		} catch (IOException e) {
-			System.err.println("Error opening accounts file");
+			System.err.println("Error opening file");
 		}
 	}
 
+	@SuppressWarnings("unchecked")
 	public ArrayList<Conta> readInput() {
 		try {
 			return (ArrayList<Conta>) input.readObject();
 		} catch (EOFException e) {
-			return contas;
+			return array;
 		} catch (ClassNotFoundException classNotFoundException) {
 			System.err.println("Unable to create object.");
 		} catch (IOException ioException) {
-			System.err.println("Error reading from accounts file.");
+			System.err.println("Error reading from file.");
+			ioException.printStackTrace();
 		}
 
-		return contas;
+		return array;
 	}
 
 	public void closeInputFile() {
@@ -56,7 +53,7 @@ public class SerializableFileManager {
 				input.close();
 			}
 		} catch (IOException e) {
-			System.err.println("Error closing accounts file");
+			System.err.println("Error closing file");
 			System.exit(1);
 		}
 	}
@@ -65,16 +62,16 @@ public class SerializableFileManager {
 		try {
 			output = new ObjectOutputStream(new FileOutputStream("contas.ser"));
 		} catch (IOException ioException) {
-			System.err.println("Error opening accounts file.");
+			System.err.println("Error opening file.");
 		}
 	}
 
-	public void writeToFile(Conta conta) {
-		contas.add(conta);
+	public void writeToFile(Conta obj) {
+		array.add(obj);
 		try {
-			output.writeObject(contas);
+			output.writeObject(array);
 		} catch (IOException e) {
-			System.err.println("Error writing to accounts file");
+			System.err.println("Error writing to file");
 		}
 	}
 
@@ -84,8 +81,31 @@ public class SerializableFileManager {
 				output.close();
 			}
 		} catch (IOException e) {
-			System.err.println("Error closing accounts file");
+			System.err.println("Error closing file");
 			System.exit(1);
+		}
+	}
+	
+	public ArrayList<Conta> read() {
+		openInputFile();
+		ArrayList<Conta> arr = readInput();
+		closeInputFile();
+		return arr;
+	}
+	
+	public void write(Conta obj) {
+		openOutputFile();
+		writeToFile(obj);
+		closeOutputFile();
+	}
+	
+	public void update(Conta conta) {
+		for (Conta c : array) {
+			if (c.getUsuario().equals(conta.getUsuario())) {
+				array.remove(c);
+				write(conta);
+				break;
+			}
 		}
 	}
 }
