@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public abstract class Conta {
+public abstract class Conta implements Serializable {
 	
 
 	abstract void creditar(double valor);
