@@ -5,7 +5,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 
 public class InvestGUI extends JFrame {
-	public static Investimento[] investimentosDisponíveis = {
+	public static Investimento[] investimentosDisponiveis = {
 			new TDPR(),
 			new FIM(),
 			new CDB(),
@@ -18,8 +18,8 @@ public class InvestGUI extends JFrame {
 		super();
 		setLayout(new GridLayout(4, 3));
 		for(int i = 0 ; i < 4 ; i++) {
-			labelNome[i] = new JLabel(investimentosDisponíveis[i].getNome()) ;
-			labelRentabilidade[i] = new JLabel(Double.toString(investimentosDisponíveis[i].getRentabilidadeAA()));
+			labelNome[i] = new JLabel(investimentosDisponiveis[i].getNome()) ;
+			labelRentabilidade[i] = new JLabel(Double.toString(investimentosDisponiveis[i].getRentabilidadeAA()));
 			btnInvestirButton[i] = new JButton("Investir");
 			add(labelNome[i]);
 			add(labelRentabilidade[i]);
@@ -28,7 +28,7 @@ public class InvestGUI extends JFrame {
 	}
 	/*public static void main(String[] args) {
 		TDPR a = new TDPR(12);
-		System.out.println(investimentosDisponíveis[1]);
+		System.out.println(investimentosDisponï¿½veis[1]);
 		InvestGUI app = new InvestGUI();
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setSize(200, 150);
