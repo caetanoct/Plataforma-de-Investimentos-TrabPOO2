@@ -1,5 +1,6 @@
+import java.io.Serializable;
 
-public abstract class Investimento {
+public abstract class Investimento implements Serializable {
 	public String nome;
 	public double rentabilidadeAA;
 	public double taxaAdm;
