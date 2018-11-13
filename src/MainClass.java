@@ -252,11 +252,15 @@ public class MainClass extends JFrame {
 				if (investPanelIsRunning == true) {
 					try {
 
-						if (e.getSource().equals(areaInvestir.btnInvestirButton[0])) {
-							double valor = Double.parseDouble(
+							double valor;
+							try {
+								valor = Double.parseDouble(
 									JOptionPane.showInputDialog(null, "Digite a quantidade que deseja investir",
 											"Efetuar Investimento", JOptionPane.PLAIN_MESSAGE));
-							if (valor < usuarioLogado.getSaldo()) {
+							} catch(NumberFormatException notNumber) {
+								valor = 0.0	
+							}
+							if (valor <= usuarioLogado.getSaldo()) {
 
 								TDPR invest = new TDPR(valor);
 								usuarioLogado.efetuarInvest(valor, invest);
@@ -275,10 +279,15 @@ public class MainClass extends JFrame {
 					if (e.getSource().equals(areaInvestir.btnInvestirButton[1])) {
 						try {
 
-							double valor = Double.parseDouble(
+							double valor;
+							try {
+								valor = Double.parseDouble(
 									JOptionPane.showInputDialog(null, "Digite a quantidade que deseja investir",
 											"Efetuar Investimento", JOptionPane.PLAIN_MESSAGE));
-							if (valor < usuarioLogado.getSaldo()) {
+							} catch(NumberFormatException notNumber) {
+								valor = 0.0	
+							}
+							if (valor <= usuarioLogado.getSaldo()) {
 
 								FIM invest = new FIM(valor);
 								usuarioLogado.efetuarInvest(valor, invest);
@@ -296,10 +305,15 @@ public class MainClass extends JFrame {
 					}
 					if (e.getSource().equals(areaInvestir.btnInvestirButton[2])) {
 						try {
-							double valor = Double.parseDouble(
+							double valor;
+							try {
+								valor = Double.parseDouble(
 									JOptionPane.showInputDialog(null, "Digite a quantidade que deseja investir",
 											"Efetuar Investimento", JOptionPane.PLAIN_MESSAGE));
-							if (valor < usuarioLogado.getSaldo()) {
+							} catch(NumberFormatException notNumber) {
+								valor = 0.0	
+							}
+							if (valor <= usuarioLogado.getSaldo()) {
 
 								CDB invest = new CDB(valor);
 								usuarioLogado.efetuarInvest(valor, invest);
@@ -317,10 +331,15 @@ public class MainClass extends JFrame {
 					}
 					if (e.getSource().equals(areaInvestir.btnInvestirButton[3])) {
 						try {
-							double valor = Double.parseDouble(
+							double valor;
+							try {
+							valor = Double.parseDouble(
 									JOptionPane.showInputDialog(null, "Digite a quantidade que deseja investir",
 											"Efetuar Investimento", JOptionPane.PLAIN_MESSAGE));
-							if (valor < usuarioLogado.getSaldo()) {
+							} catch(NumerFormatException notNumber) {
+								valor = 0.0	
+							}
+							if (valor <= usuarioLogado.getSaldo()) {
 
 								LCI invest = new LCI(valor);
 								usuarioLogado.efetuarInvest(valor, invest);
