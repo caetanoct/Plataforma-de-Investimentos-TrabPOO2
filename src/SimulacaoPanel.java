@@ -43,20 +43,22 @@ public class SimulacaoPanel extends JFrame{
 			// Calcula a rentabilidade de cada investimento em 25 anos.
 			
 			double TDPR = investidoEmTDPR * Math.pow((1 + rentabilidadeTDPR),i);
+			//System.out.println("Em ("+ i+") anos em TDPR Montante = "+ TDPR);
 			double FIM  = investidoEmFIM  * Math.pow((1 + rentabilidadeFIM),i);
+			
 			double CDB  = investidoEmCDB  * Math.pow((1 + rentabilidadeCDB),i);
+			
 			double LCI  = investidoEmLCI  * Math.pow((1 + rentabilidadeLCI),i);
-			System.out.println(new LCI().getRentabilidadeAA());
-			System.out.println(new FIM().getRentabilidadeAA());
+			//System.out.println("Em ("+ i+") anos em LCI Montante = "+ LCI);
 			dataset.addValue(TDPR,"TDPR",""+i);
-			dataset.addValue(FIM,"LCI",""+i);
+			dataset.addValue(FIM,"FIM",""+i);
 			dataset.addValue(CDB,"CDB",""+i); 
-			dataset.addValue(LCI,"FIM",""+i);  
+			dataset.addValue(LCI,"LCI",""+i);  
 			  
 		}
 		
 		JFreeChart lineChart = ChartFactory.createLineChart(
-				"Simulação dos investimentos",
+				"Simulaï¿½ï¿½o dos investimentos",
 				"Anos","Montante",
 				dataset,
 				PlotOrientation.VERTICAL,
