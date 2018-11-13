@@ -165,7 +165,7 @@ public class MainClass extends JFrame {
 				// Caso botao depositar seja apertado
 				if (e.getSource().equals(clientePanel.btDepositButton)) {
 					try {
-						Double valor;
+						double valor;
 						try {
 							valor = Double.parseDouble(JOptionPane.showInputDialog(null,
 									"Digite o valor que deseja depositar", "Depósito", JOptionPane.PLAIN_MESSAGE));
@@ -208,7 +208,7 @@ public class MainClass extends JFrame {
 				// Caso botao resgate seja apertado
 				if (e.getSource().equals(clientePanel.btResgateButton)) {
 					if (usuarioLogado.getSaldo() > 0) {
-						Double valor;
+						double valor;
 						try {
 							valor = Double.parseDouble(JOptionPane.showInputDialog(null,
 									"Digite o valor que deseja resgatar", "Resgate", JOptionPane.PLAIN_MESSAGE));
@@ -258,7 +258,7 @@ public class MainClass extends JFrame {
 									JOptionPane.showInputDialog(null, "Digite a quantidade que deseja investir",
 											"Efetuar Investimento", JOptionPane.PLAIN_MESSAGE));
 							} catch(NumberFormatException notNumber) {
-								valor = 0.0	
+								valor = 0.0;	
 							}
 							if (valor <= usuarioLogado.getSaldo()) {
 
@@ -285,7 +285,7 @@ public class MainClass extends JFrame {
 									JOptionPane.showInputDialog(null, "Digite a quantidade que deseja investir",
 											"Efetuar Investimento", JOptionPane.PLAIN_MESSAGE));
 							} catch(NumberFormatException notNumber) {
-								valor = 0.0	
+								valor = 0.0;	
 							}
 							if (valor <= usuarioLogado.getSaldo()) {
 
@@ -311,7 +311,7 @@ public class MainClass extends JFrame {
 									JOptionPane.showInputDialog(null, "Digite a quantidade que deseja investir",
 											"Efetuar Investimento", JOptionPane.PLAIN_MESSAGE));
 							} catch(NumberFormatException notNumber) {
-								valor = 0.0	
+								valor = 0.0;	
 							}
 							if (valor <= usuarioLogado.getSaldo()) {
 
@@ -336,8 +336,8 @@ public class MainClass extends JFrame {
 							valor = Double.parseDouble(
 									JOptionPane.showInputDialog(null, "Digite a quantidade que deseja investir",
 											"Efetuar Investimento", JOptionPane.PLAIN_MESSAGE));
-							} catch(NumerFormatException notNumber) {
-								valor = 0.0	
+							} catch(NumberFormatException notNumber) {
+								valor = 0.0;	
 							}
 							if (valor <= usuarioLogado.getSaldo()) {
 
