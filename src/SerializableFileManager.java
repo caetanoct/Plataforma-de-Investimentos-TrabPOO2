@@ -67,17 +67,6 @@ public class SerializableFileManager {
 		}
 	}
 
-//	public void writeToFile(Conta obj) {
-//		System.out.println("Array length before write "+array.size());
-//		array.add(obj);
-//		System.out.println("Array length2 after write "+array.size());
-//		try {
-//			output.writeObject(array);
-//		} catch (IOException e) {
-//			System.err.println("Error writing to file");
-//		}
-//	}
-
 	public void closeOutputFile() {
 		try {
 			if (output != null) {
@@ -95,12 +84,6 @@ public class SerializableFileManager {
 		closeInputFile();
 		return arr;
 	}
-
-//	public void write(Conta obj) {
-//		openOutputFile();
-//		writeToFile(obj);
-//		closeOutputFile();
-//	}
 	
 	public void writeToFile(ArrayList<Conta> contas) {
 		try {
@@ -114,28 +97,5 @@ public class SerializableFileManager {
 		openOutputFile();
 		writeToFile(contas);
 		closeOutputFile();
-	}
-
-//	public void update(Conta conta) {
-//		try {
-//			Conta c = UtilMethods.getContaByUser(conta.getUsuario(), array);
-//			for (Conta c1 : array) {
-//				if (c.getUsuario().equals(c1.getUsuario())) {
-//					System.out.printf("Conta removida: %.2f, %s, %s", c1.getSaldo(), c1.getUsuario(), c1.getSenha() + "\n\n");
-//					array.remove(c1);
-//				}
-//			}
-//			System.out.println("Array length after update " +array.size());
-//		} catch (UserNotFoundException e) {
-//			System.err.println("User not found");
-//		} catch(ConcurrentModificationException e) {
-//			System.err.println("1");
-//		}finally {
-//			write(conta);
-//		}
-//	}
-	
-	public void update(ArrayList<Conta> contas) {
-		write(contas);
 	}
 }
