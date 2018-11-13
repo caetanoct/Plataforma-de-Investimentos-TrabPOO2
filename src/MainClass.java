@@ -40,15 +40,13 @@ public class MainClass extends JFrame {
 		btBut1.addActionListener(handler);
 		add(pnPanel0);
 		addWindowListener(new java.awt.event.WindowAdapter() {
-		    @Override
-		    public void windowClosing(java.awt.event.WindowEvent windowEvent) {
-		        if (JOptionPane.showConfirmDialog(null , 
-		            "Are you sure you want to close this window?", "Close Window?", 
-		            JOptionPane.YES_NO_OPTION,
-		            JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION){
-		            System.exit(0);
-		        }
-		    }
+			@Override
+			public void windowClosing(java.awt.event.WindowEvent windowEvent) {
+				if (JOptionPane.showConfirmDialog(null, "Are you sure you want to close this window?", "Close Window?",
+						JOptionPane.YES_NO_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.YES_OPTION) {
+					System.exit(0);
+				}
+			}
 		});
 	}
 
@@ -82,10 +80,10 @@ public class MainClass extends JFrame {
 					String atrib2 = panelRegistro.tfField2.getText();
 					if (panelRegistro.cbBox1.isSelected()) {
 						ContaPremium newConta = new ContaPremium(0, atrib1, atrib2);
-						
+
 						if (!UtilMethods.isUserAlreadyInData(atrib1, contasSistema)) {
 							contasSistema.add(newConta);
-							fileManager.write(newConta);
+							fileManager.write(contasSistema);
 						} else {
 							System.out.println("j� existe esse user1");
 						}
@@ -95,7 +93,7 @@ public class MainClass extends JFrame {
 
 						if (!UtilMethods.isUserAlreadyInData(atrib1, contasSistema)) {
 							contasSistema.add(newConta);
-							fileManager.write(newConta);
+							fileManager.write(contasSistema);
 						} else {
 							System.out.println("j� existe esse user2");
 						}
@@ -156,13 +154,12 @@ public class MainClass extends JFrame {
 						Double valor = Double.parseDouble(JOptionPane.showInputDialog(null,
 								"Digite o valor que deseja depositar", "Deposit", JOptionPane.PLAIN_MESSAGE));
 						usuarioLogado.creditar(valor);
-           
-						clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo() + "R$");	
+						fileManager.write(contasSistema);
+						clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo() + "R$");
 					} catch (Exception e2) {
 						// TODO: handle exception
 						System.err.println(e2.getMessage());
 					}
-					fileManager.update(usuarioLogado);
 				}
 				// Caso botao investir seja apertado
 				if (e.getSource().equals(clientePanel.btInvestButton)) {
@@ -175,12 +172,11 @@ public class MainClass extends JFrame {
 						areaInvestir.btnInvestirButton[i].addActionListener(this);
 					}
 					investPanelIsRunning = true;
-					fileManager.update(usuarioLogado);
 				}
 				// Caso botao atualizar seja apertado
 				if (e.getSource().equals(clientePanel.btRefreshButton)) {
 					clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo() + "R$");
-					fileManager.update(usuarioLogado);
+					fileManager.write(contasSistema);
 				}
 				// Caso botao meus investimentos seja apertado
 				if (e.getSource().equals(clientePanel.btMyInvestButton)) {
@@ -189,7 +185,7 @@ public class MainClass extends JFrame {
 					MeusInvestPanel panel = new MeusInvestPanel(usuarioLogado);
 					panel.setSize(500, 500);
 					panel.setVisible(true);
-					
+
 				}
 				// Caso botao resgate seja apertado
 				if (e.getSource().equals(clientePanel.btResgateButton)) {
@@ -198,7 +194,8 @@ public class MainClass extends JFrame {
 								"Digite o valor que deseja resgatar", "Resgate", JOptionPane.PLAIN_MESSAGE));
 						if (valor <= usuarioLogado.getSaldo()) {
 							usuarioLogado.debitar(valor);
-             
+							fileManager.write(contasSistema);
+
 							clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo() + "R$");
 						} else {
 							JOptionPane.showMessageDialog(null,
@@ -206,8 +203,6 @@ public class MainClass extends JFrame {
 									JOptionPane.ERROR_MESSAGE);
 						}
 					}
-					 fileManager.update(usuarioLogado);
-					 fileManager.update(usuarioLogado);
 				}
 				// Caso botao simular investimento seja apertado
 				if (e.getSource().equals(clientePanel.btSimButton)) {
@@ -217,10 +212,10 @@ public class MainClass extends JFrame {
 				// Caso botao sair seja apertado
 				if (e.getSource().equals(clientePanel.btExitButton)) {
 					clientePanel.setVisible(false);
-					fileManager.update(usuarioLogado);
+					fileManager.write(contasSistema);
 					usuarioLogado = null;
 					loginEfetuado = false;
-					 
+
 				}
 
 				// Dentro do invest panel
@@ -238,6 +233,7 @@ public class MainClass extends JFrame {
 
 								TDPR invest = new TDPR(valor);
 								usuarioLogado.efetuarInvest(valor, invest);
+								fileManager.write(contasSistema);
 							}
 							int a = JOptionPane.showConfirmDialog(null, "Deseja continuar investindo?");
 							if (a == 1) {
@@ -260,6 +256,7 @@ public class MainClass extends JFrame {
 
 								FIM invest = new FIM(valor);
 								usuarioLogado.efetuarInvest(valor, invest);
+								fileManager.write(contasSistema);
 							}
 							int a = JOptionPane.showConfirmDialog(null, "Deseja continuar investindo?");
 							if (a == 1) {
@@ -280,6 +277,7 @@ public class MainClass extends JFrame {
 
 								CDB invest = new CDB(valor);
 								usuarioLogado.efetuarInvest(valor, invest);
+								fileManager.write(contasSistema);
 							}
 							int a = JOptionPane.showConfirmDialog(null, "Deseja continuar investindo?");
 							if (a == 1) {
@@ -301,6 +299,7 @@ public class MainClass extends JFrame {
 
 								LCI invest = new LCI(valor);
 								usuarioLogado.efetuarInvest(valor, invest);
+								fileManager.write(contasSistema);
 
 							}
 							int a = JOptionPane.showConfirmDialog(null, "Deseja continuar investindo?");
@@ -314,7 +313,6 @@ public class MainClass extends JFrame {
 						}
 
 					}
-					 fileManager.update(usuarioLogado);
 					clientePanel.pnLabelsPan.label2.setText(usuarioLogado.getSaldo() + "R$");
 				}
 			}
@@ -323,7 +321,7 @@ public class MainClass extends JFrame {
 	}
 
 	public static void main(String[] args) {
-	
+
 		MainClass app = new MainClass();
 		app.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		app.setSize(200, 150);
