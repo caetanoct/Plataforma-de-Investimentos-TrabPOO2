@@ -166,7 +166,7 @@ public class MainClass extends JFrame {
 					// Abrir nova janela listando os investimentos disponiveis(com respectivas
 					// rentabilidades) com a botao investir
 					areaInvestir = new InvestGUI();
-					areaInvestir.setSize(500, 500);
+					areaInvestir.setSize(1000, 500);
 					areaInvestir.setVisible(true);
 					for (int i = 0; i < 4; i++) {
 						areaInvestir.btnInvestirButton[i].addActionListener(this);

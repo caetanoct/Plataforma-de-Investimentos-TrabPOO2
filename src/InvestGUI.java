@@ -16,7 +16,18 @@ public class InvestGUI extends JFrame {
 	public JButton[] btnInvestirButton = new JButton[4];
 	public InvestGUI() {
 		super();
-		setLayout(new GridLayout(4, 3));
+		setLayout(new GridLayout(5, 3));
+		for(int i=0; i<3;i++) {
+			if(i == 0) {
+				add(new JLabel("Tipo de Investimento"));
+			}
+			if(i ==1) {
+				add(new JLabel("Rentabilidade a.a"));
+			}
+			if(i == 2) {
+				add(new JLabel("a"));
+			}
+		}
 		for(int i = 0 ; i < 4 ; i++) {
 			labelNome[i] = new JLabel(investimentosDisponiveis[i].getNome()) ;
 			labelRentabilidade[i] = new JLabel(Double.toString(investimentosDisponiveis[i].getRentabilidadeAA()));
