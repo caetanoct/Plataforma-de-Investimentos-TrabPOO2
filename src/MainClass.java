@@ -207,6 +207,9 @@ public class MainClass extends JFrame {
 				// Caso botao simular investimento seja apertado
 				if (e.getSource().equals(clientePanel.btSimButton)) {
 					// C�digo para simular investimento
+					SimulacaoPanel simulacaoGraphic = new SimulacaoPanel(usuarioLogado);
+					simulacaoGraphic.setSize(1000, 500);
+					simulacaoGraphic.setVisible(true);
 				}
 
 				// Caso botao sair seja apertado
