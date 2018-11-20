@@ -12,7 +12,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class MainClass extends JFrame {
-	public SerializableFileManager fileManager = new SerializableFileManager();
+	public SerializableFileManager fileManager = SingletonFileManager.getInstance();
 	public ArrayList<Conta> contasSistema = fileManager.read();
 	public Investimento[] investimentosDisponiveis = { new TDPR(), new FIM(), new CDB(), new LCI(), };
 	RegisterPanel panelRegistro;
